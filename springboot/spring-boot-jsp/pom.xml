@@ -8,10 +8,10 @@
 		<version>1.5.18.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>spring-boot-jsp</artifactId>
+	<groupId>com.epsoft</groupId>
+	<artifactId>Spring-Boot-jsp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-jsp</name>
+	<name>Spring-Boot-jsp</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
