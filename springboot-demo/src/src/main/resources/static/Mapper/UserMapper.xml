@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epsoft.demo.dao.UserMapper" >
+
+	<resultMap id="BaseResultMap" type="com.epsoft.demo.bean.entity.User" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="brith" property="brith" jdbcType="TIMESTAMP" />
+    <result column="relationid" property="relationId" jdbcType="INTEGER" />
+    <result column="createtime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    
+  </resultMap>
+    <sql id="baseColumn">id,user_name,age,sex,brith,relationid,createtime,email,phone</sql>
+	<select id="selectByName" resultMap="BaseResultMap">
+	select <include refid="baseColumn"/> from user where user_name like '%${name}%'
+	<!-- CONCAT(CONCAT('%',#{name},'%')) -->
+	</select>
+	
+	<insert id="addUser" useGeneratedKeys="true" keyProperty="id">
+	<!-- insert into user (user_name,age,sex,brith,relationid,createtime) values(#{userName},#{age},#{sex},#{brith},#{relationId},now()) -->
+	insert into user
+	<trim prefix="(" suffix=")" suffixOverrides="," prefixOverrides="">
+	<if test="userName!=null">
+	user_name,
+	</if>	
+	<if test="age!=null">
+	age,
+	</if>
+	<if test="sex!=null">
+	sex,
+	</if>
+	<if test="brith!=null">
+	brith,
+	</if>
+	<if test="relationId!=null">
+	relationid,
+	</if>
+	<if test="email!=null">
+	email,
+	</if>
+	<if test="phone!=null">
+	phone,
+	</if>
+	createtime,
+	</trim>
+	<trim prefix="values(" suffix=")" suffixOverrides=",">
+	<if test="userName!=null">
+	#{userName},
+	</if>
+	<if test="age!=null">
+	#{age},
+	</if>
+	<if test="sex!=null">
+	#{sex},
+	</if>
+	<if test="brith!=null">
+	#{brith},
+	</if>
+	<if test="relationId!=null">
+	#{relationId},
+	</if>
+	<if test="email!=null">
+	#{email},
+	</if>
+	<if test="phone!=null">
+	#{phone},
+	</if>
+	now(),
+  </trim>
+	</insert>
+	<update id="updateById" parameterType="com.epsoft.demo.bean.entity.User">
+	update user set sex=#{sex},age=#{age} where id=#{id}
+	</update>
+	
+	<delete id="deleteByIds">
+	delete from user where
+	<if test="list!=null and list.size>0">
+	id in
+	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+	#{item}
+	</foreach>
+	</if>
+	</delete>
+	 <select id="SelectByUserName" parameterType="String" resultType="int">
+	 select count(1) from user u INNER JOIN homeInfo h on u.id=h.user_id where u.user_name=#{name} 
+   </select>
+   
+   <select id="selectOrderBy" resultMap="BaseResultMap">
+   		select <include refid="baseColumn"/> from user where id between #{start} and #{end} 
+   </select>
+   
+   <select id="selectById" resultType="java.util.Map">
+   		select <include refid="baseColumn"/> from user where id between '1' and '10'
+   </select>
+</mapper>
