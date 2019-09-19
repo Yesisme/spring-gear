@@ -1,31 +1,58 @@
 package com.spring.gear.beans.factroy.support;
 
-import java.io.InputStream;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-
 import com.spring.gear.beans.BeanDefinition;
-import com.spring.gear.beans.factroy.BeanDifinitionStoreException;
 import com.spring.gear.beans.factroy.BeanFactory;
 import com.spring.gear.utils.ClassUtil;
 
-public class DefaultBeanFactory implements BeanFactory{
+/**
+ * 继承BeanDefinitionRegistry,XmlBeanDefinition
+ * @author hp
+ * 
+ */
+public class DefaultBeanFactory implements BeanFactory,BeanDefinitionRegistry{
+	
+	private final Map<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap(64);
+	
+	@Override
+	public void RegistryBeanDefinition(String BeanId, BeanDefinition beanDefinition) {
+		this.beanDefinitionMap.put(BeanId, beanDefinition);
+	}
 
-	private static final String ID_ATTRIBUTE = "id";
+	@Override
+	public Object getBean(String BeanId) {
+		BeanDefinition bd = this.beanDefinitionMap.get(BeanId);
+		if(bd == null) {
+			return null;
+		}
+		ClassLoader cl = ClassUtil.getDefaultClassLoader();
+		String className = bd.getBeanClassName();
+		try {
+			Class<?> alass = cl.loadClass(className);
+			return alass.newInstance();
+		} catch (Exception e) {
+			throw new BeanCreationException("create Bean" + className +"fail");
+		}
+	}
+
+	@Override
+	public BeanDefinition getBeanDefinition(String BeanId) {
+		
+		return this.beanDefinitionMap.get(BeanId);
+	}
+
+	//BeanFactory上半部分
+	/*private static final String ID_ATTRIBUTE = "id";
 	private static final String CLASS_ATTRIBUTE = "class";
 	
 	private Map<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
- 
+	
 	public DefaultBeanFactory(String configFileName) {
 		loadBeanDefinition(configFileName);
 	}
-
+	
 	//解析配置文件
 	private void loadBeanDefinition(String configFileName) {
 		InputStream in =null;
@@ -55,7 +82,7 @@ public class DefaultBeanFactory implements BeanFactory{
 			}
 		}
 	}
-
+	
 	@Override
 	public Object getBean(String BeanId) {
 		//通过BeanId得到BeanDefinition
@@ -75,11 +102,11 @@ public class DefaultBeanFactory implements BeanFactory{
 			throw new BeanCreationException("Bean Definition" +beanClassName+"does not exits");
 		} 
 	}
-
+	
 	@Override
 	public BeanDefinition getBeanDefinition(String BeanId) {
 		
 		return this.beanDefinitionMap.get(BeanId);
-	}
+	}*/
 
 }
