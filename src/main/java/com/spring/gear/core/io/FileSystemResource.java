@@ -22,7 +22,7 @@ public class FileSystemResource implements Resource{
 	@Override
 	public InputStream getInputStream() throws FileNotFoundException {
 		
-		return new FileInputStream(this.file);
+		 return new FileInputStream(this.file);
 	}
 
 	@Override

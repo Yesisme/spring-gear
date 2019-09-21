@@ -1,8 +1,8 @@
 package com.spring.gear.context;
 
-import com.spring.gear.beans.factroy.BeanFactory;
+import com.spring.gear.beans.factroy.config.ConfigurableBeanFactory;
 
-public interface ApplicationContext extends BeanFactory{
+public interface ApplicationContext extends ConfigurableBeanFactory{
 
 
 

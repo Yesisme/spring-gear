@@ -12,4 +12,5 @@ public interface BeanDefinitionRegistry {
 	BeanDefinition getBeanDefinition(String BeanId);
 	
 	void RegistryBeanDefinition(String BeanId,BeanDefinition beanDefinition);
+
 }

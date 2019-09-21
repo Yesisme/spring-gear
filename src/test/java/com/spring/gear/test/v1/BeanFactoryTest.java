@@ -1,7 +1,9 @@
 package com.spring.gear.test.v1;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,6 +14,7 @@ import com.spring.gear.beans.factroy.BeanDifinitionStoreException;
 import com.spring.gear.beans.factroy.support.BeanCreationException;
 import com.spring.gear.beans.factroy.support.DefaultBeanFactory;
 import com.spring.gear.beans.factroy.xml.XmlBeanDefinitionReader;
+import com.spring.gear.core.io.ClassPathResource;
 import com.spring.gear.service.v1.ZooService;
 
 public class BeanFactoryTest {
@@ -28,16 +31,25 @@ public class BeanFactoryTest {
 	@Test
 	public void testGetBean() {
 		
-		reader.loadBeanDefinition("zoo-v1.xml");
+		reader.loadBeanDefinition(new ClassPathResource("zoo-v1.xml"));
 		
 		BeanDefinition bd = factory.getBeanDefinition("zoo");
+		
+		assertTrue(bd.isSingleton());
+		
+		assertFalse(bd.isPropotype());
+		
+		assertEquals(BeanDefinition.SCOPE_DEFAULT, bd.getScope());
 		
 		assertEquals("com.spring.gear.service.v1.ZooService", bd.getBeanClassName());
 		
 	    ZooService zooService = (ZooService)factory.getBean("zoo");
 
 		assertNotNull(zooService);
+	
+		ZooService zooService1 = (ZooService)factory.getBean("zoo");
 		
+		assertEquals(zooService, zooService1);
 		/* BeanFactory上半部分
 		//1. new一个DefaultBeanFactory继承接口BeanFactory
 			BeanFactory factory = new DefaultBeanFactory("zoo-v1.xml");
@@ -55,7 +67,7 @@ public class BeanFactoryTest {
 	@Test
 	public void testInvalidBean() {
 		
-		reader.loadBeanDefinition("zoo-v1.xml");
+		reader.loadBeanDefinition(new ClassPathResource("zoo-v1.xml"));
 		try {
 			factory.getBean("invalidBean");
 		}catch(BeanCreationException e) {
@@ -77,7 +89,7 @@ public class BeanFactoryTest {
 	public void testInvalidXml() {
 		
 		try {
-			reader.loadBeanDefinition("zoo-v1xxx.xml");
+			reader.loadBeanDefinition(new ClassPathResource("xxx.xml"));
 		}catch(BeanDifinitionStoreException e) {
 			return ;
 		}

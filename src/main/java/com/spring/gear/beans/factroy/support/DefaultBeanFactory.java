@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.spring.gear.beans.BeanDefinition;
 import com.spring.gear.beans.factroy.BeanFactory;
+import com.spring.gear.beans.factroy.config.ConfigurableBeanFactory;
 import com.spring.gear.utils.ClassUtil;
 
 /**
@@ -12,9 +13,11 @@ import com.spring.gear.utils.ClassUtil;
  * @author hp
  * 
  */
-public class DefaultBeanFactory implements BeanFactory,BeanDefinitionRegistry{
+public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory,BeanDefinitionRegistry{
 	
-	private final Map<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap(64);
+	private Map<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap(64);
+	
+	private ClassLoader classLoader;
 	
 	@Override
 	public void RegistryBeanDefinition(String BeanId, BeanDefinition beanDefinition) {
@@ -24,9 +27,25 @@ public class DefaultBeanFactory implements BeanFactory,BeanDefinitionRegistry{
 	@Override
 	public Object getBean(String BeanId) {
 		BeanDefinition bd = this.beanDefinitionMap.get(BeanId);
-		if(bd == null) {
-			return null;
+		//如果bd是单例的
+		if(bd.isSingleton()) {
+			//得到这个对象
+			Object bean = this.getSingleton(BeanId);
+			//如果这个对象是空
+			if(bean==null) {
+				//通过反射创建这个Bean
+				bean = createBean(bd);
+				//然后注册这个单例的
+				this.registrySingleton(BeanId, bean);
+				
+			}
+			//返回这个Bean
+			return bean;
 		}
+		return createBean(bd);
+	}
+	
+	private Object createBean(BeanDefinition bd) {
 		ClassLoader cl = ClassUtil.getDefaultClassLoader();
 		String className = bd.getBeanClassName();
 		try {
@@ -41,6 +60,16 @@ public class DefaultBeanFactory implements BeanFactory,BeanDefinitionRegistry{
 	public BeanDefinition getBeanDefinition(String BeanId) {
 		
 		return this.beanDefinitionMap.get(BeanId);
+	}
+
+	@Override
+	public void setClassLoader(ClassLoader classLoader) {
+		this.classLoader = classLoader;
+	}
+
+	@Override
+	public ClassLoader getClassLoader() {
+		return this.classLoader;
 	}
 
 	//BeanFactory上半部分
