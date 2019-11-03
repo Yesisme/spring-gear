@@ -9,14 +9,12 @@ import com.spring.gear.utils.Assert;
 
 public class FileSystemResource implements Resource{
 	
-	private final String path;
 	
 	private final File file;
 	
 	public FileSystemResource(String path) {
 		Assert.notNull(path, "path cannot be null");
 		this.file = new File(path);
-		this.path = path;
 	}
 
 	@Override

@@ -1,5 +1,9 @@
 package com.spring.gear.beans;
 
+import java.util.List;
+
+import com.spring.gear.beans.factroy.PropertyValue;
+
 public interface BeanDefinition {
 	
 	public static final String SCOPE_SINGLETON = "singleton";
@@ -13,4 +17,6 @@ public interface BeanDefinition {
 	void setScope(String scope);
 	
 	String getBeanClassName();
+	
+	public List<PropertyValue> getPropertiesValues();
 }

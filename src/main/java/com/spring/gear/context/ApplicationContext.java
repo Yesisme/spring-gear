@@ -5,5 +5,4 @@ import com.spring.gear.beans.factroy.config.ConfigurableBeanFactory;
 public interface ApplicationContext extends ConfigurableBeanFactory{
 
 
-
 } 

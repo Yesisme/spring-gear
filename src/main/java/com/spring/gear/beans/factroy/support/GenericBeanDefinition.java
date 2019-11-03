@@ -1,6 +1,10 @@
 package com.spring.gear.beans.factroy.support;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.spring.gear.beans.BeanDefinition;
+import com.spring.gear.beans.factroy.PropertyValue;
 
 public class GenericBeanDefinition implements BeanDefinition{
 	
@@ -13,6 +17,8 @@ public class GenericBeanDefinition implements BeanDefinition{
 	private boolean propotype = false;
 	
 	private String scope = SCOPE_DEFAULT;
+	
+	private List<PropertyValue> propertyValues = new ArrayList<>();
 	
 	public GenericBeanDefinition(String id,String className) {
 		this.id = id;
@@ -43,6 +49,12 @@ public class GenericBeanDefinition implements BeanDefinition{
 		this.scope = scope;
 		this.singleton = SCOPE_SINGLETON.equals(scope) || SCOPE_DEFAULT.equals(scope);
 		this.propotype = SCOPE_PROTOTYPE.equals(scope);
+	}
+	
+	@Override
+	public List<PropertyValue> getPropertiesValues() {
+		
+		return this.propertyValues;
 	}
 
 }
