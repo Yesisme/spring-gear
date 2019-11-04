@@ -25,7 +25,7 @@ public class BeanDefinitionTestV2 {
 		reader.loadBeanDefinition(new ClassPathResource("zoo-v2.xml"));
 		BeanDefinition bd = factory.getBeanDefinition("zoo");
 		List<PropertyValue> pvs =  bd.getPropertiesValues();
-		assertTrue(pvs.size()==2);
+		assertTrue(pvs.size()==4);
 		{
 			PropertyValue pv = this.getPropertyValues("accuntDao",pvs);
 			assertNotNull(pv);

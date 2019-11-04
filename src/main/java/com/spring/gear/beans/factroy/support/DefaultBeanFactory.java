@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import com.spring.gear.beans.BeanDefinition;
 import com.spring.gear.beans.SimpleTypeCoverter;
 import com.spring.gear.beans.factroy.BeanFactory;
@@ -90,6 +92,9 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 				Object originValue = pv.getValue();
 				//通过解析器解析得到一个resolvedValue
 				Object resolverValue = resolver.resolverValueIfNecessary(originValue);
+				//简便操作直接
+				//BeanUtils.setProperty(bean, propertyName, resolverValue);
+				
 				//通过缺省api的bean的class 得到这个bean的信息，并获取所有的属性，
 				BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
 				//for循环 ，如果这个bean的信息中等于这(property标签的name的值，则调用缺省api的set方法注入，跳出

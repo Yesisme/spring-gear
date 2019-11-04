@@ -25,6 +25,6 @@ public class ApplicationContextV2 {
 		assertTrue(zoo.getAccuntDao() instanceof AccuntDao);
 		assertTrue(zoo.getItemDao() instanceof ItemDao);
 		assertEquals("leym", zoo.getOwner());
-		assertEquals("2", zoo.getVersion());
+		assertEquals(2, zoo.getVersion());
 	}
 }

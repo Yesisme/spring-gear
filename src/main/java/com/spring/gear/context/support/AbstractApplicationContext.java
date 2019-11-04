@@ -17,12 +17,16 @@ public abstract class AbstractApplicationContext implements ApplicationContext{
 	
 	private ClassLoader classLoader;
 	
-	public AbstractApplicationContext(String configFlie) {
+	public AbstractApplicationContext(String configFile) {
+		this(configFile,ClassUtil.getDefaultClassLoader());
+	}
+	
+	public AbstractApplicationContext(String configFlie,ClassLoader cl) {
 		factory = new DefaultBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
 		Resource resource = this.getResourceByPath(configFlie);
 		reader.loadBeanDefinition(resource);
-		factory.setClassLoader(this.getClassLoader());
+		factory.setClassLoader(cl);
 	}
 	
 	public Object getBean(String BeanId) {
