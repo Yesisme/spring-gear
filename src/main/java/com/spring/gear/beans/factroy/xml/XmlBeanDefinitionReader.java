@@ -17,6 +17,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.spring.gear.beans.BeanDefinition;
+import com.spring.gear.beans.ConstructorArgument;
 import com.spring.gear.beans.factroy.BeanDifinitionStoreException;
 import com.spring.gear.beans.factroy.PropertyValue;
 import com.spring.gear.beans.factroy.config.RuntimeBeanReference;
@@ -44,6 +45,10 @@ public class XmlBeanDefinitionReader {
 	
 	public static final String VALUE_ATTRIBUTE = "value";
 	
+	public static final String CONTRUCTOR_ARG_ELEMENT = "constructor-arg";
+	
+	public static final String TYPE_ATTRIBUTE = "type";
+	
 	private BeanDefinitionRegistry registry;
 
 	public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
@@ -67,6 +72,9 @@ public class XmlBeanDefinitionReader {
 				if(element.attributeValue(SCOPE_ATTRUBUTE)!=null) {
 					bd.setScope(element.attributeValue(SCOPE_ATTRUBUTE));
 				}
+				//解析构造函数
+				parseConstructorArgElements(element, bd);
+				//解析property
 				parsePropertyElement(element,bd);
 				this.registry.RegistryBeanDefinition(id, bd);
 			}
@@ -130,5 +138,34 @@ public class XmlBeanDefinitionReader {
 			//都没有则返回报错报错,,当前只支持属性 value和ref
 			throw new RuntimeException(propertyValue +"must specify a ref or value");
 		}	
+	}
+	
+	public void parseConstructorArgElements(Element element,BeanDefinition bd) {
+		//判断是否有contructorarg元素
+		Iterator ite = element.elementIterator(CONTRUCTOR_ARG_ELEMENT);
+		//有,遍历，
+		while(ite.hasNext()) {
+			Element constructorArgElement =(Element) ite.next();
+			parseConstrutorArgElement(constructorArgElement,bd);
+		}
+	}
+
+	private void parseConstrutorArgElement(Element constructorArgElement, BeanDefinition bd) {
+		//是否有type
+		String typeArr = constructorArgElement.attributeValue(TYPE_ATTRIBUTE);
+		//是否有name
+		String nameArr = constructorArgElement.attributeValue(NAME_ATTRIBUTE);
+		//通过propertyValue得到value
+		Object value = parsePropertyValue(constructorArgElement, bd, null);
+		//得到valueHolder
+		ConstructorArgument.ValueHolder valueHolder = new ConstructorArgument.ValueHolder(value);
+		//判断是否有有长度
+		if(StringUtil.hasLength(typeArr)) {
+			valueHolder.setType(typeArr);
+		}
+		if(StringUtil.hasLength(nameArr)) {
+			valueHolder.setName(nameArr);
+		}
+		bd.getConstructorArgument().addArgumentValue(valueHolder);
 	}
 }

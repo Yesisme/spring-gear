@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.spring.gear.beans.BeanDefinition;
+import com.spring.gear.beans.ConstructorArgument;
 import com.spring.gear.beans.factroy.PropertyValue;
 
 public class GenericBeanDefinition implements BeanDefinition{
@@ -19,6 +20,8 @@ public class GenericBeanDefinition implements BeanDefinition{
 	private String scope = SCOPE_DEFAULT;
 	
 	private List<PropertyValue> propertyValues = new ArrayList<>();
+	
+	private ConstructorArgument constructorArgument = new ConstructorArgument();
 	
 	public GenericBeanDefinition(String id,String className) {
 		this.id = id;
@@ -55,6 +58,11 @@ public class GenericBeanDefinition implements BeanDefinition{
 	public List<PropertyValue> getPropertiesValues() {
 		
 		return this.propertyValues;
+	}
+	@Override
+	public ConstructorArgument getConstructorArgument() {
+		
+		return this.constructorArgument;
 	}
 
 }
