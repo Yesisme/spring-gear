@@ -1,14 +1,15 @@
 package com.spring.gear.beans.factroy.support;
 
+import com.spring.gear.beans.factroy.BeanFactory;
 import com.spring.gear.beans.factroy.config.RuntimeBeanReference;
 import com.spring.gear.beans.factroy.config.TypedStringValue;
 
 public class BeanDefinitionValueResolver {
 
-	private final DefaultBeanFactory factory;
+	private final BeanFactory factory;
 	
-	public BeanDefinitionValueResolver(DefaultBeanFactory factory) {
-		this.factory = factory;
+	public BeanDefinitionValueResolver(BeanFactory beanFactory) {
+		this.factory = beanFactory;
 	}
 	
 	

@@ -7,11 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import com.spring.gear.beans.BeanDefinition;
 import com.spring.gear.beans.SimpleTypeCoverter;
-import com.spring.gear.beans.factroy.BeanFactory;
 import com.spring.gear.beans.factroy.PropertyValue;
 import com.spring.gear.beans.factroy.config.ConfigurableBeanFactory;
 import com.spring.gear.utils.ClassUtil;
@@ -65,13 +62,18 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 	}
 	
 	private Object instantiateBean(BeanDefinition bd) {
-		ClassLoader cl = ClassUtil.getDefaultClassLoader();
-		String className = bd.getBeanClassName();
-		try {
-			Class<?> alass = cl.loadClass(className);
-			return alass.newInstance();
-		} catch (Exception e) {
-			throw new BeanCreationException("create Bean" + className +"fail");
+		if(bd.hasConstrucotrArgumentValue()) {
+			ConstrutorResovler resolver = new ConstrutorResovler(this);
+			return resolver.autowireConstructor(bd);
+		}else {
+			ClassLoader cl = ClassUtil.getDefaultClassLoader();
+			String className = bd.getBeanClassName();
+			try {
+				Class<?> alass = cl.loadClass(className);
+				return alass.newInstance();
+			} catch (Exception e) {
+				throw new BeanCreationException("create Bean" + className +"fail");
+			}
 		}
 	}
 	

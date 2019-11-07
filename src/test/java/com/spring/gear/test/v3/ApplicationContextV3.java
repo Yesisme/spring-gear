@@ -15,7 +15,7 @@ public class ApplicationContextV3 {
 
 	@Test
 	public void testApplicationContext() {
-		ApplicationContext app = new ClassPathXmlApplcationContext("zoo-v3");
+		ApplicationContext app = new ClassPathXmlApplcationContext("zoo-v3.xml");
 		ZooService zooService = (ZooService)app.getBean("zoo");
 		
 		assertNotNull(zooService.getAccuntDao());
