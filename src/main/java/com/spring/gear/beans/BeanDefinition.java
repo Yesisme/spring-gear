@@ -24,4 +24,9 @@ public interface BeanDefinition {
 	
 	public boolean hasConstrucotrArgumentValue();
 	public String getId();
+	public boolean hasBeanClass();
+	public Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException;
+	public Class<?> getBeanClass();
+	
+	
 }

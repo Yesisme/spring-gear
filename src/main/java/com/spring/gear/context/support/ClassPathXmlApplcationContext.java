@@ -1,8 +1,5 @@
 package com.spring.gear.context.support;
 
-import com.spring.gear.beans.factroy.support.DefaultBeanFactory;
-import com.spring.gear.beans.factroy.xml.XmlBeanDefinitionReader;
-import com.spring.gear.context.ApplicationContext;
 import com.spring.gear.core.io.ClassPathResource;
 import com.spring.gear.core.io.Resource;
 

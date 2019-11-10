@@ -1,5 +1,7 @@
 package com.spring.gear.context.support;
 
+import com.spring.gear.beans.factroy.annotation.AutowiredAnnotationProcessor;
+import com.spring.gear.beans.factroy.config.ConfigurableBeanFactory;
 import com.spring.gear.beans.factroy.support.DefaultBeanFactory;
 import com.spring.gear.beans.factroy.xml.XmlBeanDefinitionReader;
 import com.spring.gear.context.ApplicationContext;
@@ -27,6 +29,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext{
 		Resource resource = this.getResourceByPath(configFlie);
 		reader.loadBeanDefinition(resource);
 		factory.setClassLoader(cl);
+		registerBeanPostProcessors(factory);
 	}
 	
 	public Object getBean(String BeanId) {
@@ -35,13 +38,19 @@ public abstract class AbstractApplicationContext implements ApplicationContext{
 	
 	protected abstract Resource getResourceByPath(String configFlie);
 	
-	@Override
+
 	public void setClassLoader(ClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
 
-	@Override
 	public ClassLoader getClassLoader() {
 		return this.classLoader!=null ? this.classLoader : ClassUtil.getDefaultClassLoader();
+	}
+	
+	protected void registerBeanPostProcessors(ConfigurableBeanFactory beanFactory) {
+		AutowiredAnnotationProcessor postProcessor = new AutowiredAnnotationProcessor();
+		postProcessor.setBeanFactory(beanFactory);
+		beanFactory.addBeanPostProcessor(postProcessor);
+				
 	}
 }

@@ -7,7 +7,7 @@ import com.spring.gear.utils.NumberUtil;
 import com.spring.gear.utils.StringUtil;
 
 /**
- * Created by xiang.wei on 2018/6/27
+ * 字符串转number
  *
  * @author xiang.wei
  */

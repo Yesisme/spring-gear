@@ -5,7 +5,7 @@ import java.beans.PropertyEditorSupport;
 import com.spring.gear.utils.StringUtil;
 
 /**
- * Created by xiang.wei on 2018/6/30
+ * 字符串转boolean
  *
  * @author xiang.wei
  */

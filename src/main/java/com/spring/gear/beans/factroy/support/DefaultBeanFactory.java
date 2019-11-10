@@ -3,6 +3,7 @@ package com.spring.gear.beans.factroy.support;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,7 +11,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.spring.gear.beans.BeanDefinition;
 import com.spring.gear.beans.SimpleTypeCoverter;
 import com.spring.gear.beans.factroy.PropertyValue;
+import com.spring.gear.beans.factroy.config.BeanPostProcessor;
 import com.spring.gear.beans.factroy.config.ConfigurableBeanFactory;
+import com.spring.gear.beans.factroy.config.DependencyDescriptor;
+import com.spring.gear.beans.factroy.config.InstantiationAwareBeanPostProcessor;
 import com.spring.gear.utils.ClassUtil;
 
 /**
@@ -23,6 +27,8 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 	private Map<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap(64);
 	
 	private ClassLoader classLoader;
+	
+	private List<BeanPostProcessor> BeanPostProcessor = new ArrayList<BeanPostProcessor>();
 	
 	@Override
 	public void RegistryBeanDefinition(String BeanId, BeanDefinition beanDefinition) {
@@ -78,6 +84,12 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 	}
 	
 	private void populateBean(BeanDefinition bd, Object bean) {
+		
+		for (BeanPostProcessor postProcessor : this.getBeanPostProcessor()) {
+			if(postProcessor instanceof InstantiationAwareBeanPostProcessor) {
+				((InstantiationAwareBeanPostProcessor)postProcessor).postProcessPropertyValue(bean, bd.getId());
+			}
+		}
 		//得到xml的bean标签中所有property的值
 		List<PropertyValue> propertiesValues = bd.getPropertiesValues();
 		//判断是否为空 ,为空则返回
@@ -127,7 +139,44 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 
 	@Override
 	public ClassLoader getClassLoader() {
-		return this.classLoader;
+		return this.classLoader!=null?this.classLoader :ClassUtil.getDefaultClassLoader();
+	}
+
+	@Override
+	public Object resolveDependency(DependencyDescriptor descriptor) throws ClassNotFoundException  {
+		Class<?> typeToMatch = descriptor.getFieldType();
+		for (BeanDefinition bd : this.beanDefinitionMap.values()) {
+			//判断是否有class对象
+			resovleBeanClass(bd);
+			Class<?> beanClass = bd.getBeanClass();
+			if(typeToMatch.isAssignableFrom(beanClass)) {
+				return this.getBean(bd.getId());
+			}
+		}
+		return null;
+	}
+
+	private void resovleBeanClass(BeanDefinition bd) throws ClassNotFoundException {
+		if(bd.hasBeanClass()) {
+			return;
+		}else {
+			try {
+				bd.resolveBeanClass(this.getClassLoader());
+			}catch(Exception e) {
+				throw new ClassNotFoundException("cannot loader class"+bd.getBeanClassName());
+			}
+		}
+	}
+
+	@Override
+	public void addBeanPostProcessor(BeanPostProcessor postProcessor) {
+		this.BeanPostProcessor.add(postProcessor);
+		
+	}
+
+	@Override
+	public List<BeanPostProcessor> getBeanPostProcessor() {
+		return this.BeanPostProcessor;
 	}
 
 	//BeanFactory上半部分

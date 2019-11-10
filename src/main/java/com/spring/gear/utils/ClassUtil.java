@@ -4,6 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ClassUtil {
+	
+	public static final char PATH_SEPARATOR = '/';
+	
+	public static final char PACKAGE_SEPARATOR = '.';
+	
+	private static final char INNER_CLASS_SEPARATOR = '$';
+
+    public static final String CGLIB_CLASS_SEPARATOR = "$$";
 
 	private static final Map<Class<?>, Class<?>> wrapperToPrimitiveTypeMap = new HashMap<Class<?>, Class<?>>(8);
 
@@ -24,6 +32,7 @@ public abstract class ClassUtil {
 		}
 	}
 
+	
 	public static ClassLoader getDefaultClassLoader() {
 		ClassLoader cl = null;
 
@@ -77,4 +86,26 @@ public abstract class ClassUtil {
 		return false;
 	}
 
+	public static String convertClassPathtoResourcePath(String basePackage) {
+		Assert.notNull(basePackage,"Class name must not be null");
+		return basePackage.replace(PACKAGE_SEPARATOR, PATH_SEPARATOR);
+	}
+	
+	public static String convertResourcePathToClassPath(String basePackage) {
+		Assert.notNull(basePackage,"Class name must not be null");
+		return basePackage.replace(PATH_SEPARATOR, PACKAGE_SEPARATOR);
+	}
+
+	public static String getShortName(String className) {
+
+        int lastDotIndex = className.lastIndexOf(PACKAGE_SEPARATOR);
+        int nameEndIndex = className.indexOf(CGLIB_CLASS_SEPARATOR);
+        if (nameEndIndex == -1) {
+            nameEndIndex = className.length();
+        }
+        String shortName = className.substring(lastDotIndex + 1, nameEndIndex);
+        shortName = shortName.replace(INNER_CLASS_SEPARATOR, PACKAGE_SEPARATOR);
+        return shortName;
+    }
+	
 }

@@ -9,8 +9,8 @@ import com.spring.gear.beans.propertyEditor.CustomNumberEditor;
 import com.spring.gear.utils.ClassUtil;
 
 /**
- * Created by xiang.wei on 2018/6/27
- *
+ * 
+ *目的 为了将值转成所想要的对象 比如将 string转为int，转为boolean
  * @author xiang.wei
  */
 public class SimpleTypeCoverter implements TypeConverter {

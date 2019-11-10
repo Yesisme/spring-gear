@@ -13,6 +13,8 @@ public class GenericBeanDefinition implements BeanDefinition{
 	
 	private String className;
 	
+	private Class<?> beanClass;
+	
 	private boolean singleton = true;
 	
 	private boolean propotype = false;
@@ -23,8 +25,16 @@ public class GenericBeanDefinition implements BeanDefinition{
 	
 	private ConstructorArgument constructorArgument = new ConstructorArgument();
 	
-	public GenericBeanDefinition(String id,String className) {
-		this.id = id;
+	public GenericBeanDefinition() {
+		
+	}
+	
+	public GenericBeanDefinition(String id, String beanClassName) {
+        this.id = id;
+        this.className = beanClassName;
+    }
+	
+	public void setBeanClassName(String className) {
 		this.className = className;
 	}
 	@Override
@@ -73,4 +83,33 @@ public class GenericBeanDefinition implements BeanDefinition{
 		return this.id;
 	}
 
+	public void setId(String id) {
+	    this.id = id;
+	}
+
+	@Override
+	public boolean hasBeanClass() {
+
+		return this.beanClass !=null;
+	}
+
+	@Override
+	public Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException {
+		String className = getBeanClassName();
+		if(className == null) {
+			return null;
+		}
+
+		Class<?> resolvedClass = classLoader.loadClass(className);
+		this.beanClass = resolvedClass;
+		return resolvedClass;
+	}
+
+	@Override
+	public Class<?> getBeanClass() {
+		if(this.beanClass == null) {
+			throw new IllegalStateException(this.getBeanClassName() +"has not be into ");
+		}
+		return this.beanClass;
+	}
 }
