@@ -14,8 +14,9 @@ public class SimpleMetaDataReader implements MetadataReader {
 	
 	private final Resource resource;
 	
+	//其实就是对calss类的描述，是否是接口，是否是抽象，是否final
 	private final ClassMetadata classMetadata;
-	
+	//实现了ClassMetadata，并且增加了读取注解的方法
 	private final AnnotationMetadata annotationMetadata;
 	
 	

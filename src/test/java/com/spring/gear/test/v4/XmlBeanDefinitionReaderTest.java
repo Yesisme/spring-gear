@@ -15,7 +15,11 @@ import com.spring.gear.core.io.ClassPathResource;
 import com.spring.gear.core.io.Resource;
 import com.spring.gear.core.type.AnnotationMetadata;
 import com.spring.gear.stereotype.Component;
-
+/**
+ * 第五步
+ * @author hp
+ *
+ */
 public class XmlBeanDefinitionReaderTest {
 
 	@Test

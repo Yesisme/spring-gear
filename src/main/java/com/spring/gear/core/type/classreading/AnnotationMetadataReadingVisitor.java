@@ -25,13 +25,14 @@ public class AnnotationMetadataReadingVisitor extends ClassMetaReaderingVisitor 
 		
 	}
 	
+	//vistor方法调用完成后调用此方法，得到注解名
 	@Override
 	public AnnotationVisitor visitAnnotation(final String desc, boolean visible) {
 		//通过desc获取className
 		String className = Type.getType(desc).getClassName();
 		//添加到当前annotationset当中
 		this.annotationSet.add(className);
-		//返回一个对象
+		//返回一个对象,AnnotationAttributesReadingVisitor的vistor方法被调用
 		return new AnnotationAttributesReadingVisitor(className,this.attributeMap);
 	}
 

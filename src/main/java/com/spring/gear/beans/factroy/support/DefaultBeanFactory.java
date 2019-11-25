@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import com.spring.gear.beans.BeanDefinition;
 import com.spring.gear.beans.SimpleTypeCoverter;
 import com.spring.gear.beans.factroy.PropertyValue;
@@ -60,7 +62,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 		//初始化bean
 		Object bean = instantiateBean(bd);
 		
-		//设置属性
+		//设置属性(setter注入)
 		populateBean(bd,bean);
 		
 		return bean;
@@ -68,6 +70,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 	}
 	
 	private Object instantiateBean(BeanDefinition bd) {
+		//判断是否有构造方法,优先通过构造方法实例化
 		if(bd.hasConstrucotrArgumentValue()) {
 			ConstrutorResovler resolver = new ConstrutorResovler(this);
 			return resolver.autowireConstructor(bd);

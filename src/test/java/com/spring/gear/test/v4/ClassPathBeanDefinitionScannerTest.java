@@ -12,7 +12,11 @@ import com.spring.gear.context.annotation.ScannedGenericBeanDefinition;
 import com.spring.gear.core.annotation.AnnotationAttributes;
 import com.spring.gear.core.type.AnnotationMetadata;
 import com.spring.gear.stereotype.Component;
-
+/**
+ * 第四步，对指定package进行扫描获取到有注解的类，并创建ScannedGenericBeanDefinition，注册到BeanDefinition中
+ * @author hp
+ *
+ */
 public class ClassPathBeanDefinitionScannerTest {
 
 	@Test

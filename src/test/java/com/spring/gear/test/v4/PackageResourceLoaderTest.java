@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.spring.gear.core.io.Resource;
 import com.spring.gear.core.io.support.PackageResourceLoader;
-
+//第一步
 public class PackageResourceLoaderTest {
 
 	@Test

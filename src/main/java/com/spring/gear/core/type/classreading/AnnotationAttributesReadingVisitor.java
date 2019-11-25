@@ -25,11 +25,13 @@ public final class AnnotationAttributesReadingVisitor extends AnnotationVisitor 
 		this.attributesMap = attributesMap;
 	}
 	
+	//最后调用此方法
 	@Override
     public final void visitEnd() {
         this.attributesMap.put(this.annotationType, this.attributes);
     }
 
+	//此方法先调用
     @Override
     public void visit(String attributeName, Object attributeValue) {
         this.attributes.put(attributeName, attributeValue);

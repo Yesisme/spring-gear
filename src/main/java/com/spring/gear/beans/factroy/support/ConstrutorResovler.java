@@ -44,7 +44,7 @@ public class ConstrutorResovler {
 		ConstructorArgument args = bd.getConstructorArgument();
 		//new一个SimpleTypeConvert
 		SimpleTypeCoverter typeConvert = new SimpleTypeCoverter();
-		//循环遍历所有的构造方法，获取每个方法的参数，如果构造方法中的参数个数不能arg的个数
+		//循环遍历所有的构造方法，获取每个方法的参数，如果构造方法中的参数个数不是arg的个数
 		for (int i=0;i<constructors.length;i++) {
 			//获取构造方法中的个人
 			Class<?>[] parameterTypes = constructors[i].getParameterTypes();
@@ -76,7 +76,7 @@ public class ConstrutorResovler {
 	}
 	
 
-
+	
 	private boolean valuesMatchTypes(Class<?>[] parameterTypes,List<ConstructorArgument.ValueHolder> valuesHolders,Object[] argsToUse,BeanDefinitionValueResolver valueResolver,SimpleTypeCoverter typeCoverter) {
 		//循环parameterTypes，得到valueHolder。可能是TypedStringValue,也可能是RuntimeBeanReference
 		for(int i=0;i<parameterTypes.length;i++) {

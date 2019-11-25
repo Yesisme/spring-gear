@@ -12,7 +12,11 @@ import com.spring.gear.core.type.AnnotationMetadata;
 import com.spring.gear.core.type.classreading.MetadataReader;
 import com.spring.gear.core.type.classreading.SimpleMetaDataReader;
 import com.spring.gear.stereotype.Component;
-
+/**
+ * 第三步 隐藏封装
+ * @author hp
+ *
+ */
 public class MetadataReaderTest {
 
 	

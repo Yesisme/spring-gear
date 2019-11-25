@@ -4,7 +4,7 @@ import com.spring.gear.beans.factroy.BeanFactory;
 import com.spring.gear.beans.factroy.config.RuntimeBeanReference;
 import com.spring.gear.beans.factroy.config.TypedStringValue;
 /**
- * 实际就是去解析RuntimeBeanReference，TypedStringValue，对应 配置文件中的 ref和value
+ * 实际就是去解析RuntimeBeanReference，TypedStringValue，对应 配置文件中的 ref和value的值
  * @author hp
  *
  */

@@ -20,7 +20,4 @@
         class="com.spring.gear.dao.v3.ItemDao" >
   </bean> 
   
-   <bean id="itemDao"
-        class="com.spring.gear.dao.v3.ItemDao" >
-  </bean> 
 </beans>

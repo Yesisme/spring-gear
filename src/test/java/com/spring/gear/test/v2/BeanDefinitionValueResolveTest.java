@@ -17,8 +17,6 @@ import com.spring.gear.dao.v2.AccuntDao;
 
 public class BeanDefinitionValueResolveTest {
 	
-	
-	
 	DefaultBeanFactory factory = null;
 	XmlBeanDefinitionReader reader = null;
 	BeanDefinitionValueResolver resolver = null;
