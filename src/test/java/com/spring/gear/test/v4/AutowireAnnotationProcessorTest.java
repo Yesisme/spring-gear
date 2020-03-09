@@ -63,6 +63,4 @@ public class AutowireAnnotationProcessorTest {
 		}
 		Assert.fail(fileNames+"does not exist");
 	}
-	
-	
 }

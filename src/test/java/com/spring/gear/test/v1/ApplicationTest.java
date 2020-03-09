@@ -20,7 +20,7 @@ public class ApplicationTest {
 	
 	@Test
 	public void testFileSystemXmlApplicationContext() {
-		ApplicationContext application = new FileSystemXmlApplicationContext("F:\\spring-gear\\zoo-v1.xml");
+		ApplicationContext application = new FileSystemXmlApplicationContext("E:\\spring-gear\\zoo-v1.xml");
 		ZooService zooService = (ZooService) application.getBean("zoo");
 		assertNotNull(zooService);
 		

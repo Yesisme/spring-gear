@@ -33,7 +33,7 @@ public class ResourceTest {
 	@Test
 	public void testFileSystemResource() throws Exception {
 		InputStream in = null;
-		Resource r = new FileSystemResource("F:\\spring-gear\\zoo-v1.xml");
+		Resource r = new FileSystemResource("E:\\spring-gear\\zoo-v1.xml");
 		try {
 			in = r.getInputStream();
 			Assert.assertNotNull(in);

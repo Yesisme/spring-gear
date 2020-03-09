@@ -49,7 +49,6 @@ public class PackageResourceLoader {
 		File rootFile = new File (url.getFile());
 		//将rootFile传入 retrieveMatchingFiles方法中,返回一个matchingFiles 
 		Set<File> matchingFiles = retrieveMatchingFiles(rootFile);
-		
 		//new 一个Reource保存所有的matchFile
 		Resource[] result = new Resource[matchingFiles.size()];
 

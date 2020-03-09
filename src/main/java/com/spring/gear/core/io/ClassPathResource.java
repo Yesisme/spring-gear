@@ -33,5 +33,4 @@ public class ClassPathResource implements Resource{
 
 		return this.path;
 	}
-
 }

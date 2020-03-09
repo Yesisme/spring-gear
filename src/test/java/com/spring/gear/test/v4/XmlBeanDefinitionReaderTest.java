@@ -8,7 +8,6 @@ import org.junit.Test;
 import com.spring.gear.beans.BeanDefinition;
 import com.spring.gear.beans.factroy.support.DefaultBeanFactory;
 import com.spring.gear.beans.factroy.xml.XmlBeanDefinitionReader;
-import com.spring.gear.context.annotation.ClassPathBeanDefinitionScanner;
 import com.spring.gear.context.annotation.ScannedGenericBeanDefinition;
 import com.spring.gear.core.annotation.AnnotationAttributes;
 import com.spring.gear.core.io.ClassPathResource;

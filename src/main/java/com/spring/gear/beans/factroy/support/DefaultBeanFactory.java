@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import com.spring.gear.beans.BeanDefinition;
 import com.spring.gear.beans.SimpleTypeCoverter;
 import com.spring.gear.beans.factroy.PropertyValue;

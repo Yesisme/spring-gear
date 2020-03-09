@@ -99,7 +99,6 @@ public class ClassMetaReaderingVisitor extends ClassVisitor implements ClassMeta
 
 	@Override
 	public boolean hasSuperClass() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

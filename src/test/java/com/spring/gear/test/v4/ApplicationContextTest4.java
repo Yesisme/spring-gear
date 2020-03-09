@@ -16,7 +16,7 @@ public class ApplicationContextTest4 {
 		 ZooService zoo = (ZooService) app.getBean("zooService");
 		 
 		 assertNotNull(zoo.getAccountDao());
-		 assertNotNull(zoo.getAccountDao());
+		 assertNotNull(zoo.getItemDao());
 		 
 	}
 }
